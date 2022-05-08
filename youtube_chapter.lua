@@ -76,13 +76,8 @@ end
 -- A function named script_update will be called when settings are changed
 function script_update(settings)
 	work_scene = obs.obs_data_get_string(settings, "work_scene")
-	work_count = obs.obs_data_get_int(settings, "work_count")
 end
 
--- A function named script_defaults will be called to set the default settings
-function script_defaults(settings)
-	obs.obs_data_set_default_int(settings, "work_count", 0)
-end
 
 -- a function named script_load will be called on startup
 function script_load(settings)
