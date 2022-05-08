@@ -17,7 +17,7 @@ function get_chapter_text(time, scene_name, count)
 end
 
 function on_event(event)
-	if event == obs.OBS_FRONTEND_EVENT_RECORDING_STARTED then
+	if event == obs.OBS_FRONTEND_EVENT_STREAMING_STARTED then
 		start_time = os.time()
 		work_count = 0
 
@@ -32,7 +32,7 @@ function on_event(event)
 		end
 	end
 
-	if event == obs.OBS_FRONTEND_EVENT_RECORDING_STOPPED then
+	if event == obs.OBS_FRONTEND_EVENT_STREAMING_STOPPED then
 		start_time = nil
 	end
 
