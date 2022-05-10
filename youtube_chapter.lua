@@ -46,7 +46,7 @@ end
 
 function on_event(event)
 	-- 配信開始時
-	if event == obs.OBS_FRONTEND_EVENT_RECORDING_STARTED then
+	if event == obs.OBS_FRONTEND_EVENT_STREAMING_STARTED then
 		start_time = os.time()
 		work_count = 0
 
@@ -58,7 +58,7 @@ function on_event(event)
 	end
 
 	-- 配信終了時
-	if event == obs.OBS_FRONTEND_EVENT_RECORDING_STOPPED then
+	if event == obs.OBS_FRONTEND_EVENT_STREAMING_STOPPED then
 		start_time = nil
 		if output_path ~= "" then
 			io.close()
