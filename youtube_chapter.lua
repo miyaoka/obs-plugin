@@ -32,6 +32,7 @@ end
 function print_chapter(time)
 	local scene = obs.obs_frontend_get_current_scene()
 	local scene_name = obs.obs_source_get_name(scene)
+	obs.obs_source_release(scene)
 
 	if scene_name == work_scene then
 		work_count = work_count + 1
@@ -92,6 +93,7 @@ function script_properties()
 			obs.obs_property_list_add_string(p, name, name)
 		end
 	end
+	obs.source_list_release(scenes)
 
 	-- 保存先選択
 	obs.obs_properties_add_path(props, "output_path", "Output path", obs.OBS_PATH_FILE,  "text file (*.txt)", nil)
