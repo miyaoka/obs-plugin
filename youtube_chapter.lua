@@ -9,7 +9,7 @@ work_count_source = ""
 
 function get_chapter_text(time, scene_name, count)
 	local seconds       = math.floor(time % 60)
-	local minutes       = math.floor(time / 60)
+	local minutes       = math.floor(time / 60) % 60
 	local hours         = math.floor(time / 3600)
 	if count == 0 then
 		return string.format("%02d:%02d:%02d %s", hours, minutes, seconds, scene_name)
