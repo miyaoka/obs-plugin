@@ -6,6 +6,7 @@ cur_seconds   = 0
 last_text     = ""
 stop_text     = ""
 activated     = false
+next_scene    = ""
 
 hotkey_id     = obs.OBS_INVALID_HOTKEY_ID
 
@@ -19,6 +20,11 @@ function set_time_text()
 
 	if cur_seconds < 1 then
 		text = stop_text
+		if next_scene ~= "" then
+			local source = obs.obs_get_source_by_name(next_scene)
+			obs.obs_source_release(source)
+			obs.obs_frontend_set_current_scene(source)
+		end
 	end
 
 	if text ~= last_text then
@@ -121,6 +127,18 @@ function script_properties()
 	obs.source_list_release(sources)
 
 	obs.obs_properties_add_text(props, "stop_text", "Final Text", obs.OBS_TEXT_DEFAULT)
+
+	-- シーン選択UI
+	local p2 = obs.obs_properties_add_list(props, "next_scene", "Next Scene", obs.OBS_COMBO_TYPE_EDITABLE, obs.OBS_COMBO_FORMAT_STRING)
+	local scenes = obs.obs_frontend_get_scenes()
+	if scenes ~= nil then
+		for _, scene in ipairs(scenes) do
+			local name = obs.obs_source_get_name(scene);
+			obs.obs_property_list_add_string(p2, name, name)
+		end
+	end
+	obs.source_list_release(scenes)
+
 	obs.obs_properties_add_button(props, "reset_button", "Reset Timer", reset_button_clicked)
 
 	return props
@@ -139,7 +157,7 @@ function script_update(settings)
 	total_seconds = obs.obs_data_get_int(settings, "duration") * 60
 	source_name = obs.obs_data_get_string(settings, "source")
 	stop_text = obs.obs_data_get_string(settings, "stop_text")
-
+	next_scene = obs.obs_data_get_string(settings, "next_scene")
 	reset(true)
 end
 
